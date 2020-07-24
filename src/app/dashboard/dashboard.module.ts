@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from '../guards/auth-guard.service';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, NavbarComponent, FooterComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
