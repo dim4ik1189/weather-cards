@@ -17,6 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "firebase/app",
+              "@firebase/app",
+              "@firebase/auth",
+              "@firebase/util",
+              "@firebase/firestore",
+              "@firebase/component"
+            ],
             "outputPath": "dist/weather-cards",
             "index": "src/index.html",
             "main": "src/main.ts",
