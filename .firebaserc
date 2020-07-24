@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "firedb-simple-user-auth": {
+      "hosting": {
+        "weather-cards": [
+          "firedb-simple-user-auth"
+        ]
+      }
+    }
+  }
+}
