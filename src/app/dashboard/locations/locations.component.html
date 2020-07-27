@@ -1,0 +1,35 @@
+<ng-template [ngIf]="locations.length" [ngIfElse]="addLocation">
+<!--  <div class="container">-->
+    <div class="container row flex-wrap">
+      <ng-container *ngFor="let location of locations; trackBy: identifyLocation">
+        <div class="card mx-2 mb-4 shadow-sm card-width">
+          <h5 class="card-header text-center">{{location.title}}</h5>
+          <div class="card-body">
+            <p class="card-text">{{location.description}}</p>
+
+            <p class="card-text">{{location.main.temp | toCelsius}}</p>
+
+            <ng-container *ngFor="let tag of location.tags.split(',')">
+              <span class="badge badge-pill badge-info">{{tag}}</span>
+            </ng-container>
+
+            <div class="d-flex align-items-center">
+<!--              <div class="btn-group">-->
+<!--                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
+<!--                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+<!--              </div>-->
+              <small class="text-muted">{{location.name}}, {{location.sys.country}}</small>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+<!--  </div>-->
+</ng-template>
+
+<ng-template #addLocation>
+  <div class="col text-center">
+    <h2>No locations found</h2>
+    <a type="button" class="btn btn-lg btn-primary" routerLink="../add-location">Add a location</a>
+  </div>
+</ng-template>

@@ -28,6 +28,7 @@ import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
     AngularFirestoreModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  exports: [],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
