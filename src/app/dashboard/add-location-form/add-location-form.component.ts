@@ -29,7 +29,6 @@ export class AddLocationFormComponent {
   public async createCard(): Promise<any> {
     this.isCreatingCard = true;
     const formData = this.addLocationForm.getRawValue();
-    console.log(formData);
 
     const coordinatesValue = formData.coordinates.split(',');
     let weatherInfo;
@@ -56,7 +55,7 @@ export class AddLocationFormComponent {
       return this.weatherService.getByLatAndLon(lat, lon)
         .toPromise()
         .then(({ body }) => body)
-        .catch(err => window.alert(err.message))
+        .catch(({ error }) => window.alert(error.message))
         .finally(() => this.isCreatingCard = false);
     }
   }
@@ -66,7 +65,7 @@ export class AddLocationFormComponent {
       return this.weatherService.getByCityName(cityName)
         .toPromise()
         .then(({ body }) => body)
-        .catch(err => window.alert(err.message))
+        .catch(({ error }) => window.alert(error.message))
         .finally(() => this.isCreatingCard = false);
 
     }
