@@ -10,7 +10,8 @@ export class CardsService {
   constructor(public afs: AngularFirestore) { }
 
   public createCard(cardData): Promise<any>  {
-    return this.afs.collection(`cards`).add(cardData).then(
+    return this.afs.collection(`cards`).add(cardData)
+      .then(
       res => res,
       err => window.alert('Failed to get cards. Check firebase connection ' + err)
     );

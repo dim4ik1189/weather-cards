@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CardsService } from '../../services/cards/cards.service';
 import { Location } from '@angular/common';
 import { WeatherService } from '../../services/weather/weather.service';
-import { debounce, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-location-form',
   templateUrl: './add-location-form.component.html',
   styleUrls: ['./add-location-form.component.scss']
 })
-export class AddLocationFormComponent implements OnInit {
+export class AddLocationFormComponent {
+
+  isCreatingCard = false;
 
   public addLocationForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -25,15 +26,20 @@ export class AddLocationFormComponent implements OnInit {
     private weatherService: WeatherService
   ) { }
 
-  ngOnInit(): void {
-  }
-
   public async createCard(): Promise<any> {
+    this.isCreatingCard = true;
     const formData = this.addLocationForm.getRawValue();
-
     console.log(formData);
 
-    const weatherInfo = await this.getWeatherData(formData.coordinates);
+    const coordinatesValue = formData.coordinates.split(',');
+    let weatherInfo;
+
+    if (coordinatesValue.length > 1 && Number(coordinatesValue[0]) && Number(coordinatesValue[1])) {
+      const [lat, lon] = coordinatesValue;
+      weatherInfo = await this.getWeatherDataByCoords(lat.trim(), lon.trim());
+    } else {
+      weatherInfo = await this.getWeatherDataByCity(coordinatesValue[0]);
+    }
 
     if (weatherInfo) {
       const weatherData = {
@@ -45,14 +51,24 @@ export class AddLocationFormComponent implements OnInit {
     }
   }
 
-  private getWeatherData(coordinates: string): any {
-    const [lat, lon] = coordinates.split(', ');
-
+  private getWeatherDataByCoords(lat: string, lon: string): any {
     if (lat && lon) {
       return this.weatherService.getByLatAndLon(lat, lon)
         .toPromise()
         .then(({ body }) => body)
-        .catch(err => window.alert(err.message));
+        .catch(err => window.alert(err.message))
+        .finally(() => this.isCreatingCard = false);
+    }
+  }
+
+  private getWeatherDataByCity(cityName: string): any {
+    if (cityName && String(cityName)) {
+      return this.weatherService.getByCityName(cityName)
+        .toPromise()
+        .then(({ body }) => body)
+        .catch(err => window.alert(err.message))
+        .finally(() => this.isCreatingCard = false);
+
     }
   }
 }

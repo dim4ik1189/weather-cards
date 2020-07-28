@@ -15,7 +15,6 @@ export class LocationsComponent implements OnInit {
   ngOnInit(): void {
     this.locations = this.cardsService.getAllLocations().subscribe(value => {
       this.locations = value;
-      console.log(this.locations);
     });
   }
 

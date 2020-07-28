@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="coordinates">Coordinates</label>
+        <label for="coordinates">Coordinates (or city name)</label>
         <input
           type="text"
           class="form-control"
@@ -42,12 +42,28 @@
       <div class="form-group">
         <label for="description">Description</label>
         <textarea
+          #descriptionTextArea
           class="form-control"
           formControlName="description"
           id="description"
           rows="3"
+          maxlength="100"
           required
         ></textarea>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="addLocationForm.get('description').invalid && (addLocationForm.get('description').dirty || addLocationForm.get('description').touched)"
+        >
+          Description is required!
+        </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="descriptionTextArea.textLength > 100"
+        >
+          Max length is limited to 100 characters!
+        </div>
       </div>
       <div class="form-group">
         <label for="tags">Tags</label>
@@ -67,7 +83,10 @@
           Minimum one tag is required!
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="addLocationForm.invalid">Create card</button>
+      <button type="submit" class="btn btn-primary" [disabled]="addLocationForm.invalid || isCreatingCard">
+        <span *ngIf="isCreatingCard" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Create card
+      </button>
     </form>
   </div>
 </div>

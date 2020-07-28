@@ -8,10 +8,17 @@ import { FooterComponent } from './footer/footer.component';
 import { AddLocationFormComponent } from './add-location-form/add-location-form.component';
 import { LocationsComponent } from './locations/locations.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ToCelsiusPipe } from '../pipes/to-celsius.pipe';
+import { TempPipePipe } from './pipes/temp-pipe.pipe';
 
 @NgModule({
-  declarations: [DashboardComponent, NavbarComponent, FooterComponent, AddLocationFormComponent, LocationsComponent, ToCelsiusPipe],
+  declarations: [
+    DashboardComponent,
+    NavbarComponent,
+    FooterComponent,
+    AddLocationFormComponent,
+    LocationsComponent,
+    TempPipePipe
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -37,9 +44,6 @@ import { ToCelsiusPipe } from '../pipes/to-celsius.pipe';
       }
     ]),
     ReactiveFormsModule
-  ],
-  exports: [
-    ToCelsiusPipe
   ]
 })
 export class DashboardModule { }
