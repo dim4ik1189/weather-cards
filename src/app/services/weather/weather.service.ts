@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-const API_KEY =  environment.weatherServiceApi;
+const API_KEY = environment.weatherServiceApi;
 const BASE_URL = 'http://api.openweathermap.org/data/2.5/weather';
 
 @Injectable({

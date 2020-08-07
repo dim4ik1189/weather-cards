@@ -17,6 +17,17 @@ export class CardsService {
     );
   }
 
+  public removeCard(cardData): void  {
+    this.afs
+      .collection(`cards`)
+      .doc(cardData.docId)
+      .delete()
+      .then(
+        res => res,
+        err => window.alert('Failed to get cards. Check firebase connection ' + err)
+      );
+  }
+
   public getAllLocations(): any {
     return this.afs.collection(`cards`)
       .snapshotChanges()
@@ -24,9 +35,8 @@ export class CardsService {
         map(cards => cards.map(c => {
           const data: any = c.payload.doc.data();
           const id = c.payload.doc.id;
-
           return {
-            id,
+            docId: id,
             ...data
           };
         }))

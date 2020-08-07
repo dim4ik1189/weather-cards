@@ -1,42 +1,67 @@
 <ng-template [ngIf]="locations.length" [ngIfElse]="addLocation">
-  <div class="container my-3 row flex-wrap">
-    <ng-container *ngFor="let location of locations; trackBy: identifyLocation">
-      <div class="card mx-2 mb-4 shadow-sm card-width">
-        <h5 class="card-header text-center">{{location.title}}</h5>
-        <div class="card-body">
-          <div class="d-flex align-items-center flex-column">
-            <div class="text-black-50">
-              {{location.name}}, {{location.sys.country}}
-              <span class="flag-icon flag-icon-{{location.sys.country.toLowerCase()}}"></span>
+  <div class="d-flex col-12 my-5">
+    <div class="row mx-auto flex-wrap">
+      <ng-container
+        *ngFor="let location of locations; trackBy: identifyLocation"
+      >
+        <div class="card mx-2 mb-4 shadow-sm card-width">
+          <h5 class="card-header text-center">{{ location.title }}</h5>
+          <div class="card-body">
+            <div class="d-flex align-items-center flex-column">
+              <div class="text-black-50">
+                {{ location?.name }}, {{ location?.sys?.country }}
+                <span
+                  class="flag-icon flag-icon-{{
+                    location?.sys?.country?.toLowerCase()
+                  }}"
+                ></span>
+              </div>
+              <p class="card-text">
+                <span class="badge badge-secondary">
+                  {{ location.main.temp | tempPipe }}&deg;
+                </span>
+                <span class="font-italic font-weight-light">
+                  {{ location.weather[0].main }}
+                </span>
+              </p>
+              <span class="card-text">wind {{ location.wind.speed }} m/s</span>
+              <span class="card-text"
+                >{{ location.main.humidity }}% Humidity</span
+              >
             </div>
-            <p class="card-text">
-              <span class="badge badge-secondary">
-                {{location.main.temp | tempPipe}}&deg;
-              </span>
-              <span class="font-italic font-weight-light">
-                {{location.weather[0].main}}
-              </span>
-            </p>
-            <span class="card-text">wind {{location.wind.speed}} m/s</span>
-            <span class="card-text">{{location.main.humidity}}% Humidity</span>
+            <ul class="list-group list-group-flush mt-3">
+              <li class="list-group-item d-flex flex-wrap">
+                <ng-container *ngFor="let tag of location.tags.split(',')">
+                  <span class="badge badge-pill badge-info mr-1">{{
+                    tag
+                  }}</span>
+                </ng-container>
+              </li>
+              <li class="list-group-item">{{ location.description }}</li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush mt-3">
-            <li class="list-group-item d-flex flex-wrap">
-              <ng-container *ngFor="let tag of location.tags.split(',')">
-                  <span class="badge badge-pill badge-info mr-1">{{tag}}</span>
-              </ng-container>
-            </li>
-            <li class="list-group-item">{{location.description}}</li>
-          </ul>
+          <div class="card-footer text-right">
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="deleteCard(location)"
+            >
+              Delete Card
+            </button>
+          </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </div>
 </ng-template>
 
 <ng-template #addLocation>
   <div class="col text-center">
     <h2>No locations found</h2>
-    <a type="button" class="btn btn-lg btn-primary" routerLink="../locations/add">Add a location</a>
+    <a
+      type="button"
+      class="btn btn-lg btn-primary"
+      routerLink="../locations/add"
+      >Add a location</a
+    >
   </div>
 </ng-template>

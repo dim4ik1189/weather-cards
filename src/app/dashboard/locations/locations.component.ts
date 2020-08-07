@@ -13,9 +13,21 @@ export class LocationsComponent implements OnInit {
   constructor(protected cardsService: CardsService) { }
 
   ngOnInit(): void {
-    this.locations = this.cardsService.getAllLocations().subscribe(value => {
+    this.getLocations();
+  }
+
+  public getLocations(): void {
+    this.cardsService.getAllLocations().subscribe(value => {
       this.locations = value;
     });
+  }
+
+  public deleteCard(cardData): void {
+    const confirmation = confirm('Delete card?');
+
+    if (confirmation) {
+      this.cardsService.removeCard(cardData);
+    }
   }
 
   public identifyLocation(index, location): number {
