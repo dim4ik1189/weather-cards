@@ -8,10 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "husky": {
-      "hooks": {
-        "pre-commit": "pretty-quick --staged && ng lint"
-      }
+    "pretty-quick": "pretty-quick --staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pretty-quick && npm run lint"
     }
   },
   "private": true,
